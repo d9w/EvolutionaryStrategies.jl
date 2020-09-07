@@ -29,13 +29,11 @@ The function to optimize must first be defined:
 fitness(i::Individual) = -sum(i.genes .^ 2)
 ```
 
-<div class="alert alert-info">
 Note that Cambrian by default **maximizes** objective fitness, which is common
 in neuroevolution and genetic programming. Evolutionary Strategies often
 *minimize* objective functions, but for coherence with Cambrian,
-`EvolutionaryStrategies.jl` maximizes. For objective fitness definitions, you
+`EvolutionaryStrategies.jl` maximizes. For objective function definitions, you
 must negate fitness if aiming to minimize, as demonstrated above.
-</div>
 
 Then, create and run the desired ES:
 
