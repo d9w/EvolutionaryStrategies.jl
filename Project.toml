@@ -1,0 +1,15 @@
+name = "EvolutionaryStrategies"
+uuid = "0db62460-6af5-4b1a-9d1c-927487bb80c6"
+authors = ["Dennis Wilson <d9w@pm.me>"]
+version = "0.1.0"
+
+[deps]
+Cambrian = "7f27c84d-2d74-42e5-be5f-94f6748267f3"
+JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+YAML = "ddb6d928-2868-570f-bddf-ab3f9cf99eb6"
+
+[compat]
+Cambrian = "0.2.0"
+JSON = "0.21.0"
+YAML = "0.4.2"
