@@ -1,6 +1,16 @@
 using EvolutionaryStrategies
+using Cambrian
 using Test
 
-@testset "Individual" begin
-    @test true
+function sphere(i::Individual; center=zeros(length(i.genes)))
+    [-sum((i.genes .- center).^2), -Inf]
 end
+
+function rosenbrock(i::Individual)
+    x = i.genes
+    y = -(sum([(1.0 - x[i])^2 + 100.0 * (x[i+1] - x[i]^2)^2
+               for i in 1:(length(x)-1)]))
+    [y, -Inf]
+end
+
+include("individual.jl")
