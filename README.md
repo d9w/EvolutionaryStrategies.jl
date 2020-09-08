@@ -5,7 +5,7 @@
 Julia implementations of Natural Evolutionary Strategies and CMA-ES, based on
 [Cambrian.jl](https://github.com/d9w/Cambrian.jl)
 
-<img src="es.gif" width="800px" height="auto">
+<img src="es.gif" width="400px" height="auto">
 
 ## Installation
 
