@@ -1,6 +1,7 @@
 module EvolutionaryStrategies
 
 using Cambrian
+using LinearAlgebra
 
 abstract type ESState end
 
