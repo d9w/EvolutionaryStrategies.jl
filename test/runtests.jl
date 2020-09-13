@@ -13,5 +13,6 @@ function rosenbrock(i::Individual)
     [y, -Inf]
 end
 
-# include("individual.jl")
+include("individual.jl")
 include("xnes.jl")
+include("evolution.jl")

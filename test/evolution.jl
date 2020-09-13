@@ -28,12 +28,12 @@ end
     test_evo(xNES, rosenbrock)
 end
 
-@testset "Separable Natural Evolution Strategy" begin
-    test_evo(SNES, sphere)
-    test_evo(SNES, rosenbrock)
-end
+# @testset "Separable Natural Evolution Strategy" begin
+#     test_evo(SNES, sphere)
+#     test_evo(SNES, rosenbrock)
+# end
 
-@testset "CMA Evolution Strategy" begin
-    test_evo(CMAES, sphere)
-    test_evo(CMAES, rosenbrock)
-end
+# @testset "CMA Evolution Strategy" begin
+#     test_evo(CMAES, sphere)
+#     test_evo(CMAES, rosenbrock)
+# end
