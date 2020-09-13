@@ -54,3 +54,12 @@ Other Evolutionary Strategies resources, notably other Julia packages:
 + [NaturalES.jl](https://github.com/francescoalemanno/NaturalES.jl)
 + [BlackBoxOptim.jl](https://github.com/robertfeldt/BlackBoxOptim.jl)
 
+## Development
+
+Next steps (pull requests are greatly appreciated):
+
++ Separable NES
++ CMA-ES
++ Multi-objective
++ Constraints/boundaries
++ Generalization to other types besides `Float64`
