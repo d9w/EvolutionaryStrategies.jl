@@ -1,5 +1,9 @@
 module EvolutionaryStrategies
 
-greet() = print("Hello World!")
+using Cambrian
 
-end # module
+abstract type ESState end
+
+include("exponential_nes.jl")
+
+end
