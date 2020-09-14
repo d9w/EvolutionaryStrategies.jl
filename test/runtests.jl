@@ -3,7 +3,7 @@ using Cambrian
 using Test
 
 function sphere(i::Individual; center=zeros(length(i.genes)))
-    [-sum((i.genes .- center).^2), -Inf]
+    [sum((i.genes .- center).^2), -Inf]
 end
 
 function rosenbrock(i::Individual)
@@ -13,6 +13,6 @@ function rosenbrock(i::Individual)
     [y, -Inf]
 end
 
-include("individual.jl")
+# include("individual.jl")
 include("xnes.jl")
-include("evolution.jl")
+# include("evolution.jl")
