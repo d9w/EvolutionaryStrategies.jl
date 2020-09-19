@@ -1,6 +1,6 @@
 seed: 0
-n_genes: 10
-d_fitness: 2
+n_genes: 3
+d_fitness: 1
 n_elite: 3
 n_gen: 10
 log_gen: 0

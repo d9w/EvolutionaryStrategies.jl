@@ -26,11 +26,10 @@ function xNESState(d::Int, n::Int;
     xNESState(μ, σ, B, u, Z)
 end
 
-function xnes_config(d::Int)
-    (n_population = 4+ceil(Int, log(3*d)),
-     ημ = 1.0,
-     ησ = (9 + 3 * log(d)) / (5 * d * sqrt(d)),
-     ηB = 1.0)
+function xnes_config(d::Int; n_population = 4+ceil(Int, log(3*d)),
+                     ημ = 1.0, ησ = (9 + 3 * log(d)) / (5 * d * sqrt(d)),
+                     ηB = ησ)
+    (n_population = n_population, ημ = ημ, ησ = ησ, ηB = ηB)
 end
 
 mutable struct xNES <: Cambrian.AbstractEvolution
@@ -73,14 +72,13 @@ end
 
 "generate next population"
 function xnes_populate(e::xNES)
-    randn!(e.state.Z)
     for i in eachindex(e.population)
         e.population[i].genes .= e.state.μ .+ e.state.σ .* (e.state.B * view(e.state.Z, :, i))
         e.population[i].fitness .= -Inf
     end
 end
 
-"update NES state"
+"update NES state, called after populate and evaluate"
 function xnes_generation(e::xNES)
     d = e.config.n_genes
     n = e.config.n_population
@@ -88,11 +86,9 @@ function xnes_generation(e::xNES)
     # copy population information
     F = zeros(n)
     for i in eachindex(e.population)
-        F[i] = e.population[i].fitness[1]
+        F[i] = -e.population[i].fitness[1]
     end
     idx = sortperm(F)
-    println("F")
-    println(F)
 
     # compute gradients
     ∇δ = zeros(d)
@@ -115,6 +111,7 @@ function xnes_generation(e::xNES)
     e.state.μ .+= e.config.ημ .* e.state.σ .* (e.state.B * ∇δ)
     e.state.σ *= exp(e.config.ησ/2 * ∇σ)
     e.state.B = e.state.B * exp(e.config.ηB/2 .* ∇M)
+    randn!(e.state.Z)
     Cambrian.elites_generation(e)
 end
 

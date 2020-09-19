@@ -20,18 +20,17 @@ cfg = get_config("test.yaml")
     @test ~any(isnan.(e.state.μ))
     @test ~any(isnan.(e.state.B))
     best = e.elites[end]
-    # @test best.fitness[1] <= 0.0
+    @test best.fitness[1] <= 0.0
     @test e.gen == 1
 
     for i in 1:10
-        println(i)
-        println("e.state.μ")
-        println(e.state.μ)
-        @timev step!(e)
+        step!(e)
         new_best = e.elites[end]
-        # @test new_best.fitness[1] >= best.fitness[1]
+        @test new_best.fitness[1] >= best.fitness[1]
         @test ~any(isnan.(e.state.μ))
         @test ~any(isnan.(e.state.B))
         @test all([p.fitness[1] .!= -Inf for p in e.population])
     end
+    @timev step!(e)
+    @test e.elites[end].fitness[1] < 0.1
 end
