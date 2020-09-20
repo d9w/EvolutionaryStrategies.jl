@@ -7,7 +7,7 @@ import Cambrian: populate, evaluate, generation
 
 mutable struct sNESState <: ESState
     μ::Array{Float64}
-    σ::Float64
+    σ::Array{Float64}
     u::Array{Float64}
     s::Array{Float64}
 end
@@ -91,8 +91,8 @@ function snes_generation(e::sNES)
     ∇σ = zeros(d)
     for i in 1:n
         j = idx[i]
-        ∇μ .+= u[i] .* e.state.s[:, j]
-        ∇σ .+= u[i] .* (e.state.s[:, j].^2 .- 1.0)
+        ∇μ .+= e.state.u[i] .* e.state.s[:, j]
+        ∇σ .+= e.state.u[i] .* (e.state.s[:, j].^2 .- 1.0)
     end
 
     # update state variables
