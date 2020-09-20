@@ -2,8 +2,8 @@
 
 [![Build Status](https://travis-ci.org/d9w/EvolutionaryStrategies.jl.svg?branch=master)](https://travis-ci.org/d9w/EvolutionaryStrategies.jl) [![Coverage Status](https://coveralls.io/repos/d9w/EvolutionaryStrategies.jl/badge.svg?branch=master)](https://coveralls.io/r/d9w/EvolutionaryStrategies.jl?branch=master) [![codecov](https://codecov.io/gh/d9w/EvolutionaryStrategies.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/d9w/EvolutionaryStrategies.jl)
 
-Julia implementations of Natural Evolutionary Strategies and CMA-ES, based on
-[Cambrian.jl](https://github.com/d9w/Cambrian.jl)
+Julia implementations of Natural Evolutionary Strategies and CMA-ES for the
+[Cambrian.jl](https://github.com/d9w/Cambrian.jl) framework.
 
 <img src="es.gif" width="400px" height="auto">
 
@@ -20,6 +20,26 @@ Tests are also provided:
 ```julia
 pkg> test EvolutionaryStrategies
 ```
+
+## Algorithms
+
+`EvolutionaryStrategies` implements the Exponential and Separable Natural
+Evolutionary Strategies, as described in:
+
+Wierstra, D., Schaul, T., Glasmachers, T., Sun, Y., Peters, J., & Schmidhuber,
+J. (2014). Natural evolution strategies. The Journal of Machine Learning
+Research, 15(1), 949-980.
+[pdf](https://www.ini.rub.de/PEOPLE/glasmtbl/paper/wierstra2014.pdf)
+
+and the Covariance Matrix Adaptation Evolutionary Strategy (CMA-ES), as
+described in:
+
+Hansen, N., & Ostermeier, A. (2001). Completely derandomized self-adaptation in
+evolution strategies. Evolutionary computation, 9(2), 159-195.
+[pdf](http://staff.elka.pw.edu.pl/~jarabas/ALHE/CMAES.pdf)
+
+with additional implementation details based on
+[pycma](https://github.com/CMA-ES/pycma).
 
 ## Usage
 
@@ -58,7 +78,7 @@ Other Evolutionary Strategies resources, notably other Julia packages:
 
 Next steps (pull requests are greatly appreciated):
 
-+ Separable NES
++ ~~Separable NES~~
 + CMA-ES
 + Multi-objective
 + Constraints/boundaries
