@@ -5,33 +5,34 @@ using Test
 cfg = get_config("test.yaml")
 
 function test_evo(T::DataType, fitness::Function)
+    println("Evolving ", T, " on ", fitness)
     e = T(cfg, fitness)
-    @test length(e.population) == e.cfg.n_population
+    @test length(e.population) == e.config.n_population
 
     step!(e)
     best = e.elites[end]
     @test best.fitness[1] <= 0.0
     @test e.gen == 1
 
-    println(T)
-    @timev step!(e)
+    step!(e)
     new_best = e.elites[end]
     @test new_best.fitness[1] >= best.fitness[1]
 
-    run!(e)
+    @timev run!(e)
     final_best = e.elites[end]
-    @test new_best.fitness[1] >= best.fitness[1]
+    @test final_best.fitness[1] >= new_best.fitness[1]
+    return final_best.fitness[1]
 end
 
-@testset "Exponential Natural Evolution Strategy" begin
-    test_evo(xNES, sphere)
-    test_evo(xNES, rosenbrock)
+@testset "Evolution xNES" begin
+    @test abs(test_evo(xNES, sphere)) < 1e-5
+    @test abs(test_evo(xNES, rosenbrock)) < 1.0
 end
 
-# @testset "Separable Natural Evolution Strategy" begin
-#     test_evo(SNES, sphere)
-#     test_evo(SNES, rosenbrock)
-# end
+@testset "Evolution sNES" begin
+    @test abs(test_evo(sNES, sphere)) < 1e-5
+    @test abs(test_evo(sNES, rosenbrock)) < 1.0
+end
 
 # @testset "CMA Evolution Strategy" begin
 #     test_evo(CMAES, sphere)

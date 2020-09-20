@@ -2,7 +2,7 @@ seed: 0
 n_genes: 3
 d_fitness: 1
 n_elite: 3
-n_gen: 10
+n_gen: 1000
 log_gen: 0
 save_gen: 0
 m_rate: 0.3

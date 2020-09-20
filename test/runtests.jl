@@ -13,6 +13,6 @@ function rosenbrock(i::Individual)
     [-y]
 end
 
-# include("individual.jl")
+include("individual.jl")
 include("sphere.jl")
-# include("evolution.jl")
+include("evolution.jl")
