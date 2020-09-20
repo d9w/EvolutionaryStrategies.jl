@@ -4,13 +4,12 @@ using Test
 
 cfg = get_config("test.yaml")
 
-@testset "Exponential Natural Evolution Strategy" begin
+function test_es(constructor, init)
     center = ones(cfg.n_genes)
-    e = xNES(cfg, i->sphere(i; center=ones(cfg.n_genes)))
+    e = constructor(cfg, i->sphere(i; center=ones(cfg.n_genes)))
     @test ~any(isnan.(e.state.μ))
-    @test ~any(isnan.(e.state.B))
 
-    population = EvolutionaryStrategies.xnes_init(e.config, e.state)
+    population = init(e.config, e.state)
     @test length(population) == e.config.n_population
     @test all([p.fitness[1] .== -Inf for p in population])
 
@@ -18,7 +17,6 @@ cfg = get_config("test.yaml")
     @test all([p.fitness[1] .!= -Inf for p in e.population])
 
     @test ~any(isnan.(e.state.μ))
-    @test ~any(isnan.(e.state.B))
     best = e.elites[end]
     @test best.fitness[1] <= 0.0
     @test e.gen == 1
@@ -28,9 +26,16 @@ cfg = get_config("test.yaml")
         new_best = e.elites[end]
         @test new_best.fitness[1] >= best.fitness[1]
         @test ~any(isnan.(e.state.μ))
-        @test ~any(isnan.(e.state.B))
         @test all([p.fitness[1] .!= -Inf for p in e.population])
     end
     @timev step!(e)
     @test e.elites[end].fitness[1] < 0.1
+end
+
+@testset "Exponential Natural Evolution Strategy" begin
+    test_es(xNES, EvolutionaryStrategies.xnes_init)
+end
+
+@testset "Separable Natural Evolution Strategy" begin
+    test_es(sNES, EvolutionaryStrategies.snes_init)
 end
