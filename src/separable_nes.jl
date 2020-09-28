@@ -30,25 +30,25 @@ end
 mutable struct sNES <: Cambrian.AbstractEvolution
     config::NamedTuple
     logger::CambrianLogger
-    population::Array{FloatIndividual}
-    elites::Array{FloatIndividual}
+    population::Array{AbstractESIndividual}
+    elites::Array{AbstractESIndividual}
     state::sNESState
     fitness::Function
     gen::Int
 end
 
-function snes_init(cfg::NamedTuple, state::ESState)
-    population = Array{FloatIndividual}(undef, cfg.n_population)
+function snes_init(cfg::NamedTuple, state::ESState; T::Type=ESIndividual)
+    population = Array{AbstractESIndividual}(undef, cfg.n_population)
     for i in 1:cfg.n_population
         genes = state.μ .+ state.σ .* view(state.s, :, i)
-        population[i] = FloatIndividual(genes, -Inf*ones(cfg.d_fitness))
+        population[i] = T(genes, -Inf*ones(cfg.d_fitness))
     end
     population
 end
 
-function sNES(cfg::NamedTuple, fitness::Function, state::sNESState; logfile=string("logs/", cfg.id, ".csv"))
+function sNES(cfg::NamedTuple, fitness::Function, state::sNESState; T::Type=ESIndividual, logfile=string("logs/", cfg.id, ".csv"))
     logger = CambrianLogger(logfile)
-    population = snes_init(cfg, state)
+    population = snes_init(cfg, state, T=T)
     elites = deepcopy([population[i] for i in 1:cfg.n_elite])
     sNES(cfg, logger, population, elites, state, fitness, 0)
 end
@@ -59,11 +59,11 @@ Will use a random starting point using N(0, 1)
 If cfg contains keys from snes_config, these will be used
 To provide initial state, see sNES(cfg, fitness, state)
 """
-function sNES(cfg::NamedTuple, fitness::Function; logfile=string("logs/", cfg.id, ".csv"))
+function sNES(cfg::NamedTuple, fitness::Function; T::Type=ESIndividual, logfile=string("logs/", cfg.id, ".csv"))
     logger = CambrianLogger(logfile)
     cfg = merge(snes_config(cfg.n_genes), cfg)
     state = sNESState(cfg.n_genes, cfg.n_population)
-    sNES(cfg, fitness, state; logfile=logfile)
+    sNES(cfg, fitness, state; T=T, logfile=logfile)
 end
 
 "generate next population"
