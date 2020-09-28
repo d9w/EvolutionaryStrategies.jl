@@ -59,11 +59,11 @@ Will use a random starting point using N(0, 1)
 If cfg contains keys from snes_config, these will be used
 To provide initial state, see sNES(cfg, fitness, state)
 """
-function sNES(cfg::NamedTuple, fitness::Function; logfile=string("logs/", cfg.id, ".csv"))
+function sNES(cfg::NamedTuple, fitness::Function; T::Type=ESIndividual, logfile=string("logs/", cfg.id, ".csv"))
     logger = CambrianLogger(logfile)
     cfg = merge(snes_config(cfg.n_genes), cfg)
     state = sNESState(cfg.n_genes, cfg.n_population)
-    sNES(cfg, fitness, state; logfile=logfile)
+    sNES(cfg, fitness, state; T=T, logfile=logfile)
 end
 
 "generate next population"
