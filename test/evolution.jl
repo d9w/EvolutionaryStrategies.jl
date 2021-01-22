@@ -21,6 +21,8 @@ function test_evo(T::DataType, fitness::Function)
     @timev run!(e)
     final_best = e.elites[end]
     @test final_best.fitness[1] >= new_best.fitness[1]
+
+    println("Final fitness on ", fitness, ": ", final_best.fitness[1])
     return final_best.fitness[1]
 end
 
@@ -34,7 +36,7 @@ end
     @test abs(test_evo(sNES, rosenbrock)) < 1.0
 end
 
-# @testset "CMA Evolution Strategy" begin
-#     test_evo(CMAES, sphere)
-#     test_evo(CMAES, rosenbrock)
-# end
+@testset "CMA Evolution Strategy" begin
+    @test abs(test_evo(CMAES, sphere)) < 1e-5
+    @test abs(test_evo(CMAES, rosenbrock)) < 1.0
+end
