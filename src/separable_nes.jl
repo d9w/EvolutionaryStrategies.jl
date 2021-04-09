@@ -22,7 +22,7 @@ function sNESState(d::Int, n::Int;
     sNESState(μ, σ, u, s)
 end
 
-function snes_config(d::Int; n_population = 4+ceil(Int, log(3*d)),
+function snes_config(d::Int; n_population = 4+3*ceil(Int, log(d)),
                      ημ = 1.0, ησ = (3 + log(d)) / (5 * sqrt(d)))
     (n_population = n_population, ημ = ημ, ησ = ησ)
 end
